@@ -1,0 +1,47 @@
+version: "3.4"
+
+networks:
+  default:
+    driver: bridge
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile
+    command: run --debug
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 5055:5000
+    environment:
+      DB_USERNAME: root
+      DB_PASSWORD: password1234
+      DB_HOST: mongo
+      DB_NAME_PC: helo-pc
+      DB_NAME_CONSOLE: helo-console
+      JWT_SECRET_KEY: secret!changeme
+    # volumes:
+    #   - ./path/local.file:/container.file
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password1234
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    depends_on:
+      - mongo
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password1234
+      ME_CONFIG_MONGODB_URL: mongodb://root:password1234@mongo:27017/
+
+# volumes:
+#   example: {}

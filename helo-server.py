@@ -23,11 +23,11 @@ DB = {
 # app.config['MONGODB_HOST'] = ('mongodb+srv://%(USERNAME)s:%(PASSWORD)s@%(HOST)s/%(NAME_PC)s') % DB
 app.config["MONGODB_SETTINGS"] = [
     {
-        "host": ('mongodb+srv://%(USERNAME)s:%(PASSWORD)s@%(HOST)s/%(NAME_PC)s') % DB,
+        "host": ('mongodb://%(USERNAME)s:%(PASSWORD)s@%(HOST)s/%(NAME_PC)s') % DB,
         "alias": "default",
     },
     {
-        "host": ('mongodb+srv://%(USERNAME)s:%(PASSWORD)s@%(HOST)s/%(NAME_CONSOLE)s') % DB,
+        "host": ('mongodb://%(USERNAME)s:%(PASSWORD)s@%(HOST)s/%(NAME_CONSOLE)s') % DB,
         "alias": "console",
     }
 ]
@@ -57,5 +57,5 @@ def home():
 
 # start app
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host="0.0.0.0")
 
